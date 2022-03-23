@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-//Glaven poenta na zadachata e da se najde kako se sogleduva dali dve otsechki se sechat, shto ne e moja cel na uchenje.
+//Glavna poenta na zadachata e da se najde kako se sogleduva dali dve otsechki se sechat, shto ne e moja cel na uchenje.
 //Ostanatoto e ednostavna rabota so strukturi, koja e izrabotena.
 /*
 Да се напише структура која ќе опишува отсечка во дводимензионален простор (две точки).
