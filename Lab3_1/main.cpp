@@ -1,96 +1,164 @@
 /*
-Креирајте класа Rabotnik која во себе содржи:
-
-ime (низа од максимум 30 знаци)
-prezime (низа од максимум 30 знаци)
-plata (целобројна вредност)
-За оваа класа да се креираат default конструктор и конструктор со аргументи. Да се имплементираат и следните методи:
-
-getPlata() која ја враќа платата на работникот
-pecati() која ги печати името, презимето и платата.
-Креирајте класа Fabrika во која има:
-
-rabotnik [100] (низа од вработени)
-brojVraboteni (целобројна вредност)
-Во класата имплементирајте ги следните методи:
-
-pecatiVraboteni() ги печати сите вработени
-pecatiSoPlata(int plata) ги печати сите вработени со плата поголема или еднаква на дадената во аргументот(int plata).
-Во главната функција се внесуваат податоци за n вработени. Притоа прво се внесува n, па податоците за сите n вработени. Во последниот ред се чита минималната плата.
-
-На излез да се прикажат прво сите вработени, а потоа само оние со поголема плата од минималната. Треба да се корисатат методите pecatiVraboteni и pecatiSoPlata!
+Во оваа задача треба да се внесат и испечатат податоци за автомобили.
+За еден автомобил (објект од класата Car) се чуваат следниве податоци:
+сопственик (објект од класата Person)
+датум на купување (објект од класата Date)
+цена (float price), предодредена вредност 0
+За класата Car потребно е да се напише метод за печатење print() и метод за добивање на цената getPrice().
+Класата Date содржи три цели броеви (int year, month, day) кои претставуваат датум. За неа треба да се напише метод за печатење print(), предодреден (default) конструктор, конструктор со параметри и конструктор за копирање.
+Класата Person содржи име и презиме (низи од максимум 20 знаци, со предодредени вредности not specified), предодреден конструктор, конструктор со параметри и метод за печатење print().
+Методот за печатење кај класата Person изгледа вака: [name] [lastName].
+Методот за печатење кај класата Date изгледа вака: [year].[month].[day].
+Методот за печатење кај класата Car изгледа вака:
+owner.print()
+date.print()
+Price: [price]
+Покрај тоа, потребно е да се напише метод cheaperThan(Car* cars, int numCars, float price) кој ќе ги испечати сите објекти Car од низата cars со големина numCars чија цена е помала од price.
 */
-
-#include <iostream>
-#include <cstring>
+char ns[20]="not specified";
+#include<iostream>
+#include<cstring>
 using namespace std;
 
-class Rabotnik{
-    char ime[30];
-    char prezime[30];
-    int plata;
-public:
-    Rabotnik(){
+class Date{
+    int year;
+    int month;
+    int day;
+    public:
+    Date(){
+        year=2000;
+        month=1;
+        day=1;
     }
-    Rabotnik(char _ime[30], char _prezime[30], int _plata){
-        strcpy(ime,_ime);
-        strcpy(prezime,_prezime);
-        plata=_plata;
+    Date(int y, int m, int d){
+        year=y;
+        month=m;
+        day=d;
     }
-    int getPlata(){
-        return plata;
+    Date(const Date &d){
+        year=d.year;
+        month=d.month;
+        day=d.day;
     }
-    void pecati(){
-        cout<<ime<<" "<<prezime<<" "<<plata;
-    }
-};
-
-class Fabrika{
-    Rabotnik rabotnik[100];
-    int brojVraboteni;
-public:
-    Fabrika(){
-    }
-    Fabrika(Rabotnik rab[],int _brojVraboteni){
-    brojVraboteni=_brojVraboteni;
-    for(int i=0;i<brojVraboteni;i++){
-        rabotnik[i]=rab[i];
-    }
-    }
-    void pecatiVraboteni(){
-        cout<<"Site vraboteni:"<<endl;
-        for(int i=0;i<brojVraboteni;i++){
-            rabotnik[i].pecati(); cout<<endl;
-        }
-    }
-    void pecatiSoPlata(int minimalnaPlata){
-        cout<<"Vraboteni so plata povisoka od "<<minimalnaPlata<<" :"<<endl;
-        for(int i=0;i<brojVraboteni;i++){
-            if(rabotnik[i].getPlata()>minimalnaPlata){
-                    rabotnik[i].pecati();
-                    cout<<endl;}
-        }
+    void print(){
+        cout<<year<<"."<<month<<"."<<day<<endl;
     }
 };
 
-int main()
-{
-    int n,i,minimalnaPlata;
-    char ime[30];
-    char prezime[30];
-    int plata;
-    Rabotnik rab[100];
-    cin>>n;
-    for(i=0;i<n;i++){
-        cin>>ime;
-        cin>>prezime;
-        cin>>plata;
-    Rabotnik poedinecenRab(ime, prezime, plata);
-    rab[i]=poedinecenRab;
+class Person{
+    char ime[20];
+    char prezime[20];
+    public:
+    Person(){
+        strcpy(ime,ns);
+        strcpy(prezime,ns);
     }
-    cin>>minimalnaPlata;
-    Fabrika f(rab, n);
-    f.pecatiVraboteni();
-    f.pecatiSoPlata(minimalnaPlata);
-    return 0;
+    Person(char i[20],char pi[20]){
+        strcpy(ime,i);
+        strcpy(prezime,pi);
+    }
+    void print(){
+        cout<<ime<<" "<<prezime<<endl;
+    }
+};
+
+class Car{
+    Person sopstvenik;
+    Date datum;
+    float price;
+    public:
+    Car(){
+        price=0;
+    }
+    float getPrice(){
+        return price;
+    }
+    Car(Person s, Date d, float p=0){
+        sopstvenik=s;
+        datum=d;
+        price=p;
+    }
+    Car(const Car &c){
+        sopstvenik=c.sopstvenik;
+        datum=c.datum;
+        price=c.price;
+    }
+    void print(){
+    sopstvenik.print();
+    datum.print();
+    cout<<"Price: "<<price<<endl;
+    }
+};
+
+void cheaperThan(Car *cars,int numCars,float priceLimit){
+    for(int i=0;i<numCars;i++){
+        if(cars[i].getPrice()<priceLimit)
+            cars[i].print();
+    }
+}
+int main() {
+	char name[20];
+	char lastName[20];
+	int year;
+	int month;
+	int day;
+	float price;
+
+	int testCase;
+	cin >> testCase;
+
+	if (testCase == 1) {
+		cin >> name;
+		cin >> lastName;
+		Person lik(name, lastName);
+
+		cin >> year;
+		cin >> month;
+		cin >> day;
+		Date date(year, month, day);
+
+		cin >> price;
+		Car car(lik, date,  price);
+
+		car.print();
+	}
+	else if (testCase == 2) {
+		cin >> name;
+		cin >> lastName;
+		Person lik(name, lastName);
+
+		cin >> year;
+		cin >> month;
+		cin >> day;
+		Date date(Date(year, month, day));
+
+		cin >> price;
+		Car car(lik, date,  price);
+		car.print();
+	}
+	else {
+		int numCars;
+		cin >> numCars;
+
+		Car cars[10];
+		for (int i = 0; i < numCars; i++) {
+			cin >> name;
+			cin >> lastName;
+			Person lik(name, lastName);
+
+			cin >> year;
+			cin >> month;
+			cin >> day;
+			Date date(year, month, day);
+
+			cin >> price;
+			cars[i] = Car(lik, date,  price);
+		}
+        float priceLimit;
+        cin >> priceLimit;
+		cheaperThan(cars, numCars, priceLimit);
+	}
+
+
+	return 0;
 }
